@@ -1,5 +1,8 @@
 package com.ezioshiki.twittersearcher.presentation.model;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import com.ezioshiki.twittersearcher.data.net.search.response.searchResultInner.Status;
 import com.ezioshiki.twittersearcher.data.net.search.response.searchResultInner.StatusMayHaveRetweet;
 
@@ -39,6 +42,7 @@ public class TwitterModel {
     return mTwitter.getUser().getScreenName();
   }
 
+  @NonNull
   public String getUserProfileImageUrlHttps(){
     String url = mTwitter.getUser().getProfileImageUrlHttps();
     if (url==null){
@@ -48,15 +52,27 @@ public class TwitterModel {
     }
   }
 
-  public String getMediaType(Status twitter) throws NullPointerException{
-    return twitter.getEntities().getMedia().get(0).getType();
+  @Nullable
+  private String getMediaType(Status twitter) throws NullPointerException,IndexOutOfBoundsException{
+    if (twitter.getEntities().getMedia().size()>0){
+      return twitter.getEntities().getMedia().get(0).getType();
+    }else {
+      return null;
+    }
+
   }
 
-  public String getMediaUrlHttps(Status twitter) throws NullPointerException{
-    return twitter.getEntities().getMedia().get(0).getMediaUrlHttps();
+  @Nullable
+  private String getMediaUrlHttps(Status twitter) throws NullPointerException,IndexOutOfBoundsException{
+    if (twitter.getEntities().getMedia().size()>0) {
+      return twitter.getEntities().getMedia().get(0).getMediaUrlHttps();
+    } else {
+      return null;
+    }
   }
 
-  public String getDisplayedMediaUrlHttps() throws NullPointerException{
+  @Nullable
+  public String getDisplayedMediaUrlHttps() throws NullPointerException,IndexOutOfBoundsException{
     if (isRetweetPost()){
       return getMediaUrlHttps(mTwitter.getStatus());
     }else {
@@ -64,13 +80,15 @@ public class TwitterModel {
     }
   }
 
-  public String getDisplayedMediaType() throws NullPointerException{
+  @Nullable
+  public String getDisplayedMediaType() throws NullPointerException,IndexOutOfBoundsException{
     if (isRetweetPost()){
       return getMediaType(mTwitter.getStatus());
     }else {
       return getMediaType(mTwitter);
     }
   }
+
 
   public static class Mapper{
     public static TwitterModel map(StatusMayHaveRetweet status){

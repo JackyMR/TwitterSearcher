@@ -13,19 +13,37 @@
     
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:id="@+id/search_act_search_bar"
         android:layout_alignParentTop="true"
         />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageButton
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:id="@+id/search_act_search_button"
-        android:layout_alignBaseline="@id/search_act_search_bar"
-        android:text="@string/search_btn_text"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/ic_action_search"
+        android:scaleType="centerInside"
+        android:layout_alignRight="@+id/search_act_search_bar"
+        android:layout_alignEnd="@+id/search_act_search_bar"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/search_act_select_location"
+        android:layout_below="@id/search_act_search_bar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/search_act_select_language"
+        android:layout_below="@id/search_act_select_location"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         />
 
     <TextView

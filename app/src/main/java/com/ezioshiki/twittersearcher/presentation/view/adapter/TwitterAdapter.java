@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.ezioshiki.twittersearcher.R;
 import com.ezioshiki.twittersearcher.presentation.model.TwitterModel;
+import com.squareup.picasso.Picasso;
 
 import java.util.Collection;
 import java.util.List;
@@ -41,8 +42,21 @@ public class TwitterAdapter extends RecyclerView.Adapter<TwitterAdapter.ViewHold
     holder.mUsername.setText("@"+mTwitters.get(position).getUserAtName());
     holder.mUserDisplayName.setText(mTwitters.get(position).getUserDisplayName());
     holder.mTwitterText.setText(mTwitters.get(position).getTwitterText());
-    //holder.mUserProfilePhoto
-    //holder.mTwitterPhoto
+    try {
+      Picasso.with(mContext).load(mTwitters.get(position).getUserProfileImageUrlHttps())
+          .into(holder.mUserProfilePhoto);
+      //only show photo media for this demo
+      if (TwitterModel.MEDIA_PHOTO.equals(mTwitters.get(position).getDisplayedMediaType())) {
+        Picasso.with(mContext).load(mTwitters.get(position).getDisplayedMediaUrlHttps())
+            .into(holder.mTwitterPhoto);
+      }else {
+        holder.mTwitterPhoto.setImageBitmap(null);
+        holder.mTwitterPhoto.setVisibility(View.GONE);
+      }
+    }catch (NullPointerException | IndexOutOfBoundsException e){
+      e.printStackTrace();
+      holder.mTwitterPhoto.setVisibility(View.GONE);
+    }
   }
 
   @Override public int getItemCount() {

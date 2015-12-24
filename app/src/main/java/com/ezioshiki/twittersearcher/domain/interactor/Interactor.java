@@ -75,6 +75,22 @@ public class Interactor {
         getLanguage());
   }
 
+  public String getDisplayedLanguage() {
+    return mSetting.getLang();
+  }
+
+  public String getDisplayedLocation(){
+    return mSetting.getLocation();
+  }
+
+  public void setLanguageToSp(String displayedLang) {
+    mSetting.setLang(displayedLang);
+  }
+
+  public void setLocationToSp(String displayedLocation) {
+    mSetting.setLocation(displayedLocation);
+  }
+
   private String getBearerToken() {
     return "Bearer "+mSetting.getBearerToken();
   }

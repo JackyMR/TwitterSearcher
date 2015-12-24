@@ -18,7 +18,7 @@ public class Setting {
   public static final String BEARER_TOKEN = SP_NAME + "BEARER_TOKEN";
 
   public static final String EMPTY_STRING = "";
-  public static final String ALL = "all";
+  public static final String ALL = "全部";
 
   private Context mContext;
   private SharedPreferences sp;

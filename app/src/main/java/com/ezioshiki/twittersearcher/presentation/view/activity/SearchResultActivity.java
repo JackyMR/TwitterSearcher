@@ -26,6 +26,7 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.Subscription;
 import timber.log.Timber;
 
@@ -42,6 +43,17 @@ public class SearchResultActivity extends BaseActivity implements SearchResultsL
 
   private TwitterAdapter mTwitterAdapter;
   private RecyclerView.LayoutManager mLayoutManager;
+
+  @OnClick(R.id.search_result_act_search_btn)
+  public void search(View view){
+    doSearch();
+  }
+
+  private void doSearch() {
+    if (mSearchBar.getText().toString().length()>0) {
+      mPresenter.search(mSearchBar.getText().toString());
+    }
+  }
 
 
   @Override
@@ -60,6 +72,7 @@ public class SearchResultActivity extends BaseActivity implements SearchResultsL
     mSearchBar.setSelection(mSearchBar.getText().length());
     mPresenter.search(question);
 
+    //// TODO: 15/12/23 这个货的模式,改变下
   }
 
   private void setUpTwitterList() {
