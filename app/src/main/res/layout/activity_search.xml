@@ -55,7 +55,7 @@
             android:text="选择城市"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            />
+            style="@style/Base.TextAppearance.AppCompat.Medium"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -63,7 +63,8 @@
             android:layout_weight="1"
             android:id="@+id/search_act_select_location"
 
-            />
+            style="@style/Widget.AppCompat.Light.PopupMenu"
+            android:background="#81d4fa"/>
 
 
     </LinearLayout>
@@ -86,7 +87,7 @@
             android:text="选择语言"
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            />
+            style="@style/Base.TextAppearance.AppCompat.Medium"/>
 
 
         <Button
@@ -94,7 +95,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/search_act_select_language"
 
-            />
+            style="@style/Widget.AppCompat.PopupMenu"
+            android:background="#81d4fa"/>
     </LinearLayout>
 
     <TextView

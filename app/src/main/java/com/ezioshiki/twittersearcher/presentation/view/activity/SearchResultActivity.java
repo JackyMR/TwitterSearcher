@@ -5,10 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -27,7 +26,6 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import rx.Subscription;
 import timber.log.Timber;
 
@@ -36,32 +34,16 @@ public class SearchResultActivity extends BaseActivity implements SearchResultsL
   public static final String SEARCH_TEXT = "SEARCH_TEXT";
 
   @Bind(R.id.search_result_act_loading) ProgressBar mLoadingCircle;
-  @Bind(R.id.search_result_act_search_bar) EditText mSearchBar;
-  @Bind(R.id.search_result_act_search_btn) ImageButton mSearchBtn;
+//  @Bind(R.id.search_result_act_search_bar) EditText mSearchBar;
+//  @Bind(R.id.search_result_act_search_btn) ImageButton mSearchBtn;
   @Bind(R.id.search_result_act_twitter_list) RecyclerView mTwitterList;
+  @Bind(R.id.search_result_act_toolbar) Toolbar mToolbar;
 
+  @Bind(R.id.search_result_act_search_view) SearchView mSearchView;
   @Inject SearchResultPresenter mPresenter;
 
   private TwitterAdapter mTwitterAdapter;
   private RecyclerView.LayoutManager mLayoutManager;
-
-  @OnClick(R.id.search_result_act_search_btn)
-  public void search(View view){
-    doSearch();
-    hideSoftInput();
-  }
-
-  private void hideSoftInput() {
-    ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
-        mSearchBar.getWindowToken(),0
-    );
-  }
-
-  private void doSearch() {
-    if (mSearchBar.getText().toString().length()>0) {
-      mPresenter.search(mSearchBar.getText().toString());
-    }
-  }
 
 
   @Override
@@ -71,14 +53,33 @@ public class SearchResultActivity extends BaseActivity implements SearchResultsL
     ButterKnife.bind(this);
     TsApplication.getComponent(this).inject(this);
 
+    initToolbar();
+
+    mSearchView.setIconifiedByDefault(false);
+    mSearchView.setSubmitButtonEnabled(true);
+    mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+      @Override public boolean onQueryTextSubmit(String query) {
+        search(query);
+        return false;
+      }
+
+      @Override public boolean onQueryTextChange(String newText) {
+        return false;
+      }
+    });
+
     showLoading();
     mPresenter.setView(this);
     setUpTwitterList();
 
     String question = getQuestionString();
-    mSearchBar.setText(question);
-    mSearchBar.setSelection(mSearchBar.getText().length());
-    mPresenter.search(question);
+    mSearchView.setQuery(question,true);
+
+
+  }
+
+  private void initToolbar() {
+    setSupportActionBar(mToolbar);
 
   }
 
@@ -139,8 +140,21 @@ public class SearchResultActivity extends BaseActivity implements SearchResultsL
 
   public static Intent getCallingIntent(Context context,String searchText) {
     Intent intent =  new Intent(context,SearchResultActivity.class);
-    intent.putExtra(SEARCH_TEXT,searchText);
+    intent.putExtra(SEARCH_TEXT, searchText);
     return intent;
+  }
+
+  public void search(String query){
+    doSearch(query);
+    mLayoutManager.scrollToPosition(0);
+
+  }
+
+
+  private void doSearch(String query) {
+    if (query.length()>0) {
+      mPresenter.search(query);
+    }
   }
 
 

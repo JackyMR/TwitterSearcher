@@ -51,24 +51,6 @@ public class SearchResultPresenter implements Presenter {
             mView.hideLoading();
             Timber.i("search result onNext");
             mView.renderResults(TwitterModel.Mapper.mapList(searchResultResponse.getStatuses()));
-
-
-
-//
-//            List<StatusMayHaveRetweet> list = searchResultResponse.getStatuses();
-//            StatusMayHaveRetweet item = list.get(0);
-//            item.getText(); //推特文字
-//            item.getUser().getName(); //用户名,显示成主要的
-//            item.getUser().getScreenName(); //实际用户名,显示成次要的,前面加@
-//            item.getUser().getProfileImageUrlHttps(); //头像url
-//
-//            item.getCreatedAt(); //推特创建时间,觉得可以不做
-//            item.getStatus(); //可能为null,如果不是retweet,那么检查有没有
-//            item.getEntities().getMedia().get(0).getType();
-//            item.getEntities().getMedia().get(0).getMediaUrlHttps();
-//            //如果是retweet
-//            item.getStatus().getEntities().getMedia().get(0).getMediaUrlHttps();
-
           }
         });
   }
