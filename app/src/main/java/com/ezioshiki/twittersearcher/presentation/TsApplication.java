@@ -3,9 +3,11 @@ package com.ezioshiki.twittersearcher.presentation;
 import android.app.Application;
 import android.content.Context;
 
+import com.ezioshiki.twittersearcher.BuildConfig;
 import com.ezioshiki.twittersearcher.presentation.di.components.ApplicationComponent;
 import com.ezioshiki.twittersearcher.presentation.di.components.DaggerApplicationComponent;
 import com.ezioshiki.twittersearcher.presentation.di.modules.ApplicationModule;
+import com.squareup.picasso.Picasso;
 
 import rx.plugins.DebugHook;
 import rx.plugins.DebugNotification;
@@ -29,36 +31,48 @@ public class TsApplication extends Application {
     buildComponentForDagger();
     setLogger();
     setRxJavaDebugger();
+    setPicassoDebugger();
+  }
+
+  private void setPicassoDebugger() {
+    if (BuildConfig.DEBUG){
+      Picasso.with(getApplicationContext()).setIndicatorsEnabled(true);
+      Picasso.with(getApplicationContext()).setLoggingEnabled(true);
+    }
   }
 
   private void setLogger() {
-    Timber.plant(new Timber.DebugTree());
+    if (BuildConfig.DEBUG) {
+      Timber.plant(new Timber.DebugTree());
+    }
 
   }
 
   private void setRxJavaDebugger() {
-    RxJavaPlugins.getInstance().registerObservableExecutionHook(
-        new DebugHook<>(new DebugNotificationListener<Object>() {
-          @Override public <T> T onNext(DebugNotification<T> n) {
-            Timber.v("RxJava on Next : " + n.toString());
-            return super.onNext(n);
+    if (BuildConfig.DEBUG) {
+      RxJavaPlugins.getInstance().registerObservableExecutionHook(
+          new DebugHook<>(new DebugNotificationListener<Object>() {
+            @Override public <T> T onNext(DebugNotification<T> n) {
+              Timber.v("RxJava on Next : " + n.toString());
+              return super.onNext(n);
 
-          }
+            }
 
-          @Override public <T> Object start(DebugNotification<T> n) {
-            return super.start(n);
-          }
+            @Override public <T> Object start(DebugNotification<T> n) {
+              return super.start(n);
+            }
 
-          @Override public void complete(Object context) {
-            super.complete(context);
-          }
+            @Override public void complete(Object context) {
+              super.complete(context);
+            }
 
-          @Override public void error(Object context, Throwable e) {
-            Timber.i("RxJava on Error : " + e.toString());
-            super.error(context, e);
-          }
-        })
-    );
+            @Override public void error(Object context, Throwable e) {
+              Timber.i("RxJava on Error : " + e.toString());
+              super.error(context, e);
+            }
+          })
+      );
+    }
   }
 
   private void buildComponentForDagger() {

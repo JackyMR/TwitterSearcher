@@ -17,7 +17,7 @@ import static com.ezioshiki.twittersearcher.data.net.search.SearchConfig.SEARCH_
  * Created by EzioShiki on 15/12/22.
  */
 public interface TwitterSearchApi {
-  @GET(SEARCH_URL)
+  @GET(SEARCH_URL+"?count=100")
   Observable<SearchResultResponse> search(
       @Header(AUTH_HEADER) String bearerToken,
       @Query(QUESTION) String question,

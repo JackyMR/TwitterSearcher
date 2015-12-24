@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -47,6 +48,13 @@ public class SearchResultActivity extends BaseActivity implements SearchResultsL
   @OnClick(R.id.search_result_act_search_btn)
   public void search(View view){
     doSearch();
+    hideSoftInput();
+  }
+
+  private void hideSoftInput() {
+    ((InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
+        mSearchBar.getWindowToken(),0
+    );
   }
 
   private void doSearch() {
@@ -72,7 +80,6 @@ public class SearchResultActivity extends BaseActivity implements SearchResultsL
     mSearchBar.setSelection(mSearchBar.getText().length());
     mPresenter.search(question);
 
-    //// TODO: 15/12/23 这个货的模式,改变下
   }
 
   private void setUpTwitterList() {
@@ -80,6 +87,8 @@ public class SearchResultActivity extends BaseActivity implements SearchResultsL
     mTwitterList.setLayoutManager(mLayoutManager);
     mTwitterAdapter = new TwitterAdapter(this,new ArrayList<TwitterModel>());
     mTwitterList.setAdapter(mTwitterAdapter);
+    mTwitterList.addItemDecoration(new TwitterAdapter.DividerItemDecoration(this,
+        TwitterAdapter.DividerItemDecoration.VERTICAL_LIST));
 
   }
 
