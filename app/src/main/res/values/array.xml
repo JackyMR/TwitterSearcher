@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="display_language">
+        <item>全部</item>
+        <item>中文</item>
+        <item>English</item>
+        <item>日本語</item>
+        <item>Deutsch</item>
+        <item>français</item>
+
+    </string-array>
+
+    <string-array name="display_location">
+        <item>全部</item>
+        <item>北京</item>
+        <item>上海</item>
+        <item>纽约</item>
+        <item>东京</item>
+        <item>伦敦</item>
+
+    </string-array>
+</resources>
