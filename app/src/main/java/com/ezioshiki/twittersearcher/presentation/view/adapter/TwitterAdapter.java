@@ -8,7 +8,6 @@ import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +28,8 @@ import timber.log.Timber;
 
 /**
  * Created by EzioShiki on 15/12/23.
+ *
+ * Adaptar that manages a collection of {@link TwitterModel}.
  */
 public class TwitterAdapter extends RecyclerView.Adapter<TwitterAdapter.ViewHolder>{
 
@@ -56,6 +57,7 @@ public class TwitterAdapter extends RecyclerView.Adapter<TwitterAdapter.ViewHold
 
     try {
 
+      //show user profile photo
       String userProfileUrl = mTwitters.get(position).getUserProfileImageUrlHttps();
       if (holder.mUserProfilePhoto.getTag()==null||
           !holder.mUserProfilePhoto.getTag().equals(userProfileUrl)) {
@@ -68,15 +70,16 @@ public class TwitterAdapter extends RecyclerView.Adapter<TwitterAdapter.ViewHold
         String mediaUrl = mTwitters.get(position).getDisplayedMediaUrlHttps();
         if (holder.mTwitterPhoto.getTag()==null||!holder.mTwitterPhoto.getTag().equals(mediaUrl)){
 
-          if (position==0){
-            Timber.i("Get image! image url: "+mediaUrl);
-          }
+//          if (position==0){
+//            Timber.i("Get image! image url: "+mediaUrl);
+//          }
 
 
           Picasso.with(mContext)
               .load(mediaUrl).placeholder(R.drawable.linear_placeholder_image)
               .into(holder.mTwitterPhoto, new Callback() {
                 @Override public void onSuccess() {
+                  //debug info
                   if (position==0) {
                     Timber.i("onSuccess");
                   }
@@ -175,7 +178,7 @@ public class TwitterAdapter extends RecyclerView.Adapter<TwitterAdapter.ViewHold
 
     @Override
     public void onDraw(Canvas c, RecyclerView parent) {
-      Log.v("recyclerview - itemdecoration", "onDraw()");
+      //Log.v("recyclerview - itemdecoration", "onDraw()");
 
       if (mOrientation == VERTICAL_LIST) {
         drawVertical(c, parent);

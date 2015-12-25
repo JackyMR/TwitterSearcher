@@ -19,5 +19,5 @@ public class MockLocation {
   public static final double SHANG_HAI_LAT = 31.2304160000;
   public static final double SHANG_HAI_LONG = 121.4737010000;
 
-  public static final String radius = "10km";
+  public static final String RADIUS = "10km";
 }

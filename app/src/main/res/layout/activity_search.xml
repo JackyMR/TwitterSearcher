@@ -105,7 +105,10 @@
         android:id="@+id/search_act_notify_text"
         android:layout_below="@id/search_act_search_button"
         android:text="@string/cannot_access_twitter_text"
+        android:layout_marginTop="100dp"
+        android:textColor="@color/colorAccent"
         android:visibility="gone"
+        android:layout_gravity="center"
         />
 
 

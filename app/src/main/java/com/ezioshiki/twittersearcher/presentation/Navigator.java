@@ -10,6 +10,8 @@ import javax.inject.Inject;
 
 /**
  * Created by EzioShiki on 15/12/21.
+ *
+ * Navigator between activities
  */
 public class Navigator {
 

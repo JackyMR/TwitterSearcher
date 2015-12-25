@@ -29,13 +29,14 @@ import butterknife.ButterKnife;
 import rx.Subscription;
 import timber.log.Timber;
 
+/**
+ * Activity that shows a list of Twitters.
+ */
 public class SearchResultActivity extends BaseActivity implements SearchResultsListView {
 
   public static final String SEARCH_TEXT = "SEARCH_TEXT";
 
   @Bind(R.id.search_result_act_loading) ProgressBar mLoadingCircle;
-//  @Bind(R.id.search_result_act_search_bar) EditText mSearchBar;
-//  @Bind(R.id.search_result_act_search_btn) ImageButton mSearchBtn;
   @Bind(R.id.search_result_act_twitter_list) RecyclerView mTwitterList;
   @Bind(R.id.search_result_act_toolbar) Toolbar mToolbar;
 
@@ -54,7 +55,18 @@ public class SearchResultActivity extends BaseActivity implements SearchResultsL
     TsApplication.getComponent(this).inject(this);
 
     initToolbar();
+    setUpSearchView();
+    showLoading();
+    mPresenter.setView(this);
+    setUpTwitterList();
 
+    String question = getQuestionString();
+    mSearchView.setQuery(question,true);
+
+
+  }
+
+  private void setUpSearchView() {
     mSearchView.setIconifiedByDefault(false);
     mSearchView.setSubmitButtonEnabled(true);
     mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -67,15 +79,6 @@ public class SearchResultActivity extends BaseActivity implements SearchResultsL
         return false;
       }
     });
-
-    showLoading();
-    mPresenter.setView(this);
-    setUpTwitterList();
-
-    String question = getQuestionString();
-    mSearchView.setQuery(question,true);
-
-
   }
 
   private void initToolbar() {
@@ -105,7 +108,6 @@ public class SearchResultActivity extends BaseActivity implements SearchResultsL
   }
 
   @Override protected List<Subscription> createAutoManagerSubscriptions() {
-    //// TODO: 15/12/21  
     return new ArrayList<>();
   }
 
@@ -132,6 +134,10 @@ public class SearchResultActivity extends BaseActivity implements SearchResultsL
     hideRetry();
     Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
     Timber.i(message);
+  }
+
+  @Override public void showEmptyResult(String message) {
+    Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
   }
 
   @Override public Context getContext() {

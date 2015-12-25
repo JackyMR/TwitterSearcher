@@ -21,7 +21,7 @@ public class SearchQueryBuilder {
   public static String buildGeoCodeString(TsLocation location){
      return new StringBuilder().append(location.getLatitude()).append(",")
          .append(location.getLongitude()).append(",")
-         .append(MockLocation.radius).toString();
+         .append(MockLocation.RADIUS).toString();
   }
 
   public static String buildLanguageString(TsLanguage language){

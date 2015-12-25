@@ -1,7 +1,7 @@
 package com.ezioshiki.twittersearcher.presentation.presenter;
 
 import com.ezioshiki.twittersearcher.data.net.search.response.SearchResultResponse;
-import com.ezioshiki.twittersearcher.domain.interactor.Interactor;
+import com.ezioshiki.twittersearcher.domain.interactor.GetTwitterList;
 import com.ezioshiki.twittersearcher.presentation.model.TwitterModel;
 import com.ezioshiki.twittersearcher.presentation.view.LoadDataView;
 import com.ezioshiki.twittersearcher.presentation.view.SearchResultsListView;
@@ -20,11 +20,11 @@ public class SearchResultPresenter implements Presenter {
 
   private SearchResultsListView mView;
 
-  private Interactor mInteractor;
+  private GetTwitterList mGetTwitterList;
 
   @Inject
-  public SearchResultPresenter(Interactor interactor) {
-    mInteractor = interactor;
+  public SearchResultPresenter(GetTwitterList getTwitterList) {
+    mGetTwitterList = getTwitterList;
   }
 
   @Override
@@ -35,7 +35,7 @@ public class SearchResultPresenter implements Presenter {
   public void search(String question) {
     mView.showLoading();
 
-    mInteractor.search(question)
+    mGetTwitterList.search(question)
         .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Observer<SearchResultResponse>() {
           @Override public void onCompleted() {
@@ -43,14 +43,17 @@ public class SearchResultPresenter implements Presenter {
           }
 
           @Override public void onError(Throwable e) {
-            //todo:add error handler
-            mView.showError(e.getMessage());
+            //mView.showError(e.getMessage());
+            mView.showError("Cannot access twitter server");
           }
 
           @Override public void onNext(SearchResultResponse searchResultResponse) {
             mView.hideLoading();
             Timber.i("search result onNext");
             mView.renderResults(TwitterModel.Mapper.mapList(searchResultResponse.getStatuses()));
+            if (searchResultResponse.getStatuses().size()==0){
+              mView.showEmptyResult("No matched result");
+            }
           }
         });
   }

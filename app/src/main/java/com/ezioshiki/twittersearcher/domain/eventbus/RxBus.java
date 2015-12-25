@@ -11,6 +11,8 @@ import timber.log.Timber;
 
 /**
  * Created by EzioShiki on 15/12/21.
+ *
+ * Use RxJava to simulate a EventBus
  */
 @Singleton
 public class RxBus {

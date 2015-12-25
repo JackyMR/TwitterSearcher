@@ -23,14 +23,14 @@ public class SearchConfig {
 
 
   /**
-   * Returns tweets by users located within a given radius of the given latitude/longitude.
+   * Returns tweets by users located within a given RADIUS of the given latitude/longitude.
    * The location is preferentially taking from the Geotagging API,
    * but will fall back to their Twitter profile.
-   * The parameter value is specified by “latitude,longitude,radius”,
-   * where radius units must be specified as either “mi” (miles) or “km” (kilometers).
+   * The parameter value is specified by “latitude,longitude,RADIUS”,
+   * where RADIUS units must be specified as either “mi” (miles) or “km” (kilometers).
    * Note that you cannot use the near operator via the API to geocode arbitrary locations;
    * however you can use this geocode parameter to search near geocodes directly.
-   * A maximum of 1,000 distinct “sub-regions” will be considered when using the radius modifier.
+   * A maximum of 1,000 distinct “sub-regions” will be considered when using the RADIUS modifier.
    *
    * Example Values: 37.781157,-122.398720,1mi
    * */

@@ -16,6 +16,9 @@ import dagger.Component;
 /**
  * Created by EzioShiki on 15/12/21.
  */
+/**
+ * A component whose lifetime is the life of the application.
+ */
 @Component(modules = ApplicationModule.class)
 @Singleton
 public interface ApplicationComponent {

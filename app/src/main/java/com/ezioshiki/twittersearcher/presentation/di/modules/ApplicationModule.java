@@ -16,6 +16,9 @@ import dagger.Provides;
 /**
  * Created by EzioShiki on 15/12/21.
  */
+/**
+ * Dagger module that provides objects which will live during the application lifecycle.
+ */
 @Module
 public class ApplicationModule {
 

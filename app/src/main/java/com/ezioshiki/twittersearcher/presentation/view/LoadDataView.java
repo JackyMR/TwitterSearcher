@@ -4,6 +4,8 @@ import android.content.Context;
 
 /**
  * Created by EzioShiki on 15/12/22.
+ *
+ * Interface representing a View that will use to load data.
  */
 public interface LoadDataView {
   /**
@@ -32,6 +34,13 @@ public interface LoadDataView {
    * @param message A string representing an error.
    */
   void showError(String message);
+
+  /**
+   * Show an empty message
+   *
+   * @param message A string representing results are empty.
+   */
+  void showEmptyResult(String message);
 
   /**
    * Get a {@link Context}.

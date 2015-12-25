@@ -15,7 +15,8 @@ import com.ezioshiki.twittersearcher.R;
 import com.ezioshiki.twittersearcher.domain.eventbus.AoaFailedEvent;
 import com.ezioshiki.twittersearcher.domain.eventbus.RxBus;
 import com.ezioshiki.twittersearcher.domain.eventbus.RxBusEvent;
-import com.ezioshiki.twittersearcher.domain.interactor.Interactor;
+import com.ezioshiki.twittersearcher.domain.interactor.GetToken;
+import com.ezioshiki.twittersearcher.domain.interactor.UiFragment;
 import com.ezioshiki.twittersearcher.presentation.Navigator;
 import com.ezioshiki.twittersearcher.presentation.TsApplication;
 
@@ -39,7 +40,8 @@ import rx.functions.Action1;
 public class SearchActivity extends BaseActivity {
 
   @Inject Navigator mNavigator;
-  @Inject Interactor mInteractor;
+  @Inject GetToken mGetToken;
+  @Inject UiFragment mUiFragment;
   @Inject RxBus mRxBus;
 
   @Bind(R.id.search_act_search_bar) EditText mSearchBar;
@@ -65,7 +67,7 @@ public class SearchActivity extends BaseActivity {
         .setItems(R.array.display_language, new DialogInterface.OnClickListener() {
           @Override public void onClick(DialogInterface dialog, int which) {
             mLanguageBtn.setText(mDisplayedLangs[which]);
-            mInteractor.setLanguageToSp(mDisplayedLangs[which]);
+            mUiFragment.setLanguageToSp(mDisplayedLangs[which]);
             dialog.dismiss();
           }
         }).create().show();
@@ -77,7 +79,7 @@ public class SearchActivity extends BaseActivity {
         .setItems(R.array.display_location, new DialogInterface.OnClickListener() {
           @Override public void onClick(DialogInterface dialog, int which) {
             mLocationBtn.setText(mDisplayedLocations[which]);
-            mInteractor.setLocationToSp(mDisplayedLocations[which]);
+            mUiFragment.setLocationToSp(mDisplayedLocations[which]);
             dialog.dismiss();
           }
         }).create().show();
@@ -98,9 +100,9 @@ public class SearchActivity extends BaseActivity {
 
     ButterKnife.bind(this);
 
-    mLanguageBtn.setText(mInteractor.getDisplayedLanguage());
-    mLocationBtn.setText(mInteractor.getDisplayedLocation());
-    mInteractor.getBearerTokenAndStore();
+    mLanguageBtn.setText(mUiFragment.getDisplayedLanguage());
+    mLocationBtn.setText(mUiFragment.getDisplayedLocation());
+    mGetToken.getBearerTokenAndStore();
   }
 
 

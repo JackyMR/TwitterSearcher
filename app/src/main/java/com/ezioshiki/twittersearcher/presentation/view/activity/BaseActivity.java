@@ -16,6 +16,9 @@ import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by EzioShiki on 15/12/21.
+ *
+ * Give activity convenience to handle RxJava subscriptions' lifecycle
+ * If you do some network request with RxJava , it will automated cancel in onStop()
  */
 public abstract class BaseActivity extends AppCompatActivity{
   @Inject RxBus mRxBus;
