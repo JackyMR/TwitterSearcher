@@ -1,7 +1,7 @@
 package com.ezioshiki.twittersearcher.presentation.presenter;
 
 import com.ezioshiki.twittersearcher.data.net.search.response.SearchResultResponse;
-import com.ezioshiki.twittersearcher.domain.interactor.GetTwitterList;
+import com.ezioshiki.twittersearcher.domain.interactor.GetTwitterListInter;
 import com.ezioshiki.twittersearcher.presentation.model.TwitterModel;
 import com.ezioshiki.twittersearcher.presentation.view.LoadDataView;
 import com.ezioshiki.twittersearcher.presentation.view.SearchResultsListView;
@@ -20,11 +20,11 @@ public class SearchResultPresenter implements Presenter {
 
   private SearchResultsListView mView;
 
-  private GetTwitterList mGetTwitterList;
+  private GetTwitterListInter mGetTwitterListInter;
 
   @Inject
-  public SearchResultPresenter(GetTwitterList getTwitterList) {
-    mGetTwitterList = getTwitterList;
+  public SearchResultPresenter(GetTwitterListInter getTwitterListInter) {
+    mGetTwitterListInter = getTwitterListInter;
   }
 
   @Override
@@ -35,7 +35,7 @@ public class SearchResultPresenter implements Presenter {
   public void search(String question) {
     mView.showLoading();
 
-    mGetTwitterList.search(question)
+    mGetTwitterListInter.search(question)
         .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Observer<SearchResultResponse>() {
           @Override public void onCompleted() {

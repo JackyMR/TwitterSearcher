@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,8 +16,8 @@ import com.ezioshiki.twittersearcher.R;
 import com.ezioshiki.twittersearcher.domain.eventbus.AoaFailedEvent;
 import com.ezioshiki.twittersearcher.domain.eventbus.RxBus;
 import com.ezioshiki.twittersearcher.domain.eventbus.RxBusEvent;
-import com.ezioshiki.twittersearcher.domain.interactor.GetToken;
-import com.ezioshiki.twittersearcher.domain.interactor.UiFragment;
+import com.ezioshiki.twittersearcher.domain.interactor.GetTokenInter;
+import com.ezioshiki.twittersearcher.domain.interactor.UiFragmentInter;
 import com.ezioshiki.twittersearcher.presentation.Navigator;
 import com.ezioshiki.twittersearcher.presentation.TsApplication;
 
@@ -40,8 +41,8 @@ import rx.functions.Action1;
 public class SearchActivity extends BaseActivity {
 
   @Inject Navigator mNavigator;
-  @Inject GetToken mGetToken;
-  @Inject UiFragment mUiFragment;
+  @Inject GetTokenInter mGetTokenInter;
+  @Inject UiFragmentInter mUiFragmentInter;
   @Inject RxBus mRxBus;
 
   @Bind(R.id.search_act_search_bar) EditText mSearchBar;
@@ -56,18 +57,20 @@ public class SearchActivity extends BaseActivity {
   }
 
   private void searchTwitter() {
-    if (mSearchBar.getText()!=null) {
+    if (!TextUtils.isEmpty(mSearchBar.getText())) {
       mNavigator.navigateToSearchResultActivity(this,mSearchBar.getText().toString());
+    }else {
+      mSearchBar.setError(getString(R.string.empty_search));
     }
   }
 
   @OnClick(R.id.search_act_select_language)
   public void popupLanguageSelectDialog(View view){
-    new AlertDialog.Builder(this).setTitle("选择语言")
+    new AlertDialog.Builder(this).setTitle(getString(R.string.select_lang_title))
         .setItems(R.array.display_language, new DialogInterface.OnClickListener() {
           @Override public void onClick(DialogInterface dialog, int which) {
             mLanguageBtn.setText(mDisplayedLangs[which]);
-            mUiFragment.setLanguageToSp(mDisplayedLangs[which]);
+            mUiFragmentInter.setLanguageToSp(mDisplayedLangs[which]);
             dialog.dismiss();
           }
         }).create().show();
@@ -75,11 +78,11 @@ public class SearchActivity extends BaseActivity {
 
   @OnClick(R.id.search_act_select_location)
   public void popupLocationSelectDialog(View view){
-    new AlertDialog.Builder(this).setTitle("选择城市")
+    new AlertDialog.Builder(this).setTitle(getString(R.string.select_loca_title))
         .setItems(R.array.display_location, new DialogInterface.OnClickListener() {
           @Override public void onClick(DialogInterface dialog, int which) {
             mLocationBtn.setText(mDisplayedLocations[which]);
-            mUiFragment.setLocationToSp(mDisplayedLocations[which]);
+            mUiFragmentInter.setLocationToSp(mDisplayedLocations[which]);
             dialog.dismiss();
           }
         }).create().show();
@@ -100,9 +103,9 @@ public class SearchActivity extends BaseActivity {
 
     ButterKnife.bind(this);
 
-    mLanguageBtn.setText(mUiFragment.getDisplayedLanguage());
-    mLocationBtn.setText(mUiFragment.getDisplayedLocation());
-    mGetToken.getBearerTokenAndStore();
+    mLanguageBtn.setText(mUiFragmentInter.getDisplayedLanguage());
+    mLocationBtn.setText(mUiFragmentInter.getDisplayedLocation());
+    mGetTokenInter.getBearerTokenAndStore();
   }
 
 

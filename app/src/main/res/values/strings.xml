@@ -61,4 +61,7 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="search_btn_text">Search</string>
     <string name="cannot_access_twitter_text">Cannot access twitter server!</string>
+    <string name="empty_search">请输入搜索内容</string>
+    <string name="select_lang_title">选择语言</string>
+    <string name="select_loca_title">选择城市</string>
 </resources>

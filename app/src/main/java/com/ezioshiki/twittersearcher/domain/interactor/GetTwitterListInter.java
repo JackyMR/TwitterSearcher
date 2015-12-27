@@ -16,7 +16,7 @@ import rx.Observable;
 /**
  * Created by EzioShiki on 15/12/25.
  */
-public class GetTwitterList {
+public class GetTwitterListInter {
 
   private TwitterSearchApi mSearcher;
   private Setting mSetting;
@@ -25,7 +25,7 @@ public class GetTwitterList {
   private final EnumSet<TsLanguage> languages = EnumSet.allOf(TsLanguage.class);
 
   @Inject
-  public GetTwitterList(TwitterSearchApi searcher, Setting setting) {
+  public GetTwitterListInter(TwitterSearchApi searcher, Setting setting) {
     mSearcher = searcher;
     mSetting = setting;
   }

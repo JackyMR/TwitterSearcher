@@ -7,12 +7,12 @@ import javax.inject.Inject;
 /**
  * Created by EzioShiki on 15/12/21.
  */
-public class UiFragment {
+public class UiFragmentInter {
 
   private Setting mSetting;
 
   @Inject
-  public UiFragment(Setting setting) {
+  public UiFragmentInter(Setting setting) {
 
     mSetting = setting;
   }

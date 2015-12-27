@@ -18,14 +18,14 @@ import rx.schedulers.Schedulers;
 /**
  * Created by EzioShiki on 15/12/25.
  */
-public class GetToken {
+public class GetTokenInter {
 
   private TwitterAOA mAOA;
   private RxBus mRxBus;
   private Setting mSetting;
 
   @Inject
-  public GetToken(TwitterAOA twitterAOA, RxBus rxBus,Setting setting) {
+  public GetTokenInter(TwitterAOA twitterAOA, RxBus rxBus, Setting setting) {
     mSetting = setting;
     mAOA = twitterAOA;
     mRxBus = rxBus;
